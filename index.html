@@ -1,1052 +1,855 @@
 <!DOCTYPE html>
-
-<html lang="en">
-
+<html>
 <head>
-
-  <meta charset="UTF-8">
-
+  <base target="_top">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Travel Agency Management System</title>
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-
-    /* Global Styles */
-
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --success-color: #4cc9f0;
+      --danger-color: #f72585;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
     * {
-
       box-sizing: border-box;
-
       margin: 0;
-
       padding: 0;
-
     }
-
     
-
     body {
-
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      color: var(--dark-color);
       line-height: 1.6;
-
-      background-color: #f5f5f5;
-
-      color: #333;
-
     }
-
     
-
     .container {
-
-      max-width: 1200px;
-
+      max-width: 1000px;
       margin: 0 auto;
-
       padding: 20px;
-
     }
-
     
-
-    /* Header Styles */
-
-    header {
-
-      background-color: #2c3e50;
-
-      color: white;
-
-      padding: 20px 0;
-
-      text-align: center;
-
-      margin-bottom: 30px;
-
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-
-    }
-
-    
-
-    header h1 {
-
-      font-size: 2.2rem;
-
-    }
-
-    
-
-    /* Card Styles */
-
     .card {
-
-      background-color: white;
-
-      border-radius: 8px;
-
-      
-
-      padding: 25px;
-
-      margin-bottom: 30px;
-
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+      margin-bottom: 20px;
+      transition: var(--transition);
     }
-
     
-
-    /* Form Styles */
-
+    .card:hover {
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1, h2, h3, h4 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    
     .form-group {
-
       margin-bottom: 20px;
-
     }
-
     
-
-    .form-group label {
-
+    label {
       display: block;
-
       margin-bottom: 8px;
-
-      font-weight: 600;
-
+      font-weight: 500;
+      color: #495057;
     }
-
     
-
-    .form-group input,
-
-    .form-group select {
-
+    input, select {
       width: 100%;
-
-      padding: 10px;
-
-      border: 1px solid #ddd;
-
-      border-radius: 4px;
-
-      font-size: 16px;
-
-    }
-
-    
-
-    .form-row {
-
-      display: flex;
-
-      gap: 20px;
-
-    }
-
-    
-
-    .form-row .form-group {
-
-      flex: 1;
-
-    }
-
-    
-
-    /* Button Styles */
-
-    .btn {
-
-      display: inline-block;
-
-      padding: 10px 20px;
-
-      background-color: #3498db;
-
-      color: white;
-
-      border: none;
-
-      border-radius: 4px;
-
-      cursor: pointer;
-
-      font-size: 16px;
-
-      text-decoration: none;
-
-      transition: background-color 0.3s;
-
-    }
-
-    
-
-    .btn:hover {
-
-      background-color: #2980b9;
-
-    }
-
-    
-
-    .btn-success {
-
-      background-color: #2ecc71;
-
-    }
-
-    
-
-    .btn-success:hover {
-
-      background-color: #27ae60;
-
-    }
-
-    
-
-    .btn-danger {
-
-      background-color: #e74c3c;
-
-    }
-
-    
-
-    .btn-danger:hover {
-
-      background-color: #c0392b;
-
-    }
-
-    
-
-    .btn-whatsapp {
-
-      background-color: #25D366;
-
-    }
-
-    
-
-    .btn-whatsapp:hover {
-
-      background-color: #128C7E;
-
-    }
-
-    
-
-    /* Navigation Styles */
-
-    .nav-tabs {
-
-      display: flex;
-
-      border-bottom: 1px solid #ddd;
-
-      margin-bottom: 20px;
-
-    }
-
-    
-
-    .nav-tab {
-
-      padding: 10px 20px;
-
-      cursor: pointer;
-
-      border: 1px solid transparent;
-
-      border-bottom: none;
-
-      border-radius: 4px 4px 0 0;
-
-      margin-right: 5px;
-
-      background-color: #f8f9fa;
-
-    }
-
-    
-
-    .nav-tab.active {
-
-      background-color: white;
-
-      border-color: #ddd;
-
-      border-bottom-color: white;
-
-      font-weight: bold;
-
-    }
-
-    
-
-    /* Table Styles */
-
-    table {
-
-      width: 100%;
-
-      border-collapse: collapse;
-
-      margin-top: 20px;
-
-      table-layout: none;
-
-    }
-
-    
-
-    th, td {
-
       padding: 12px 15px;
-
-      text-align: left;
-
-      border-bottom: 1px solid #ddd;
-
-      white-space: nowrap;
-
-      overflow: hidden;
-
-      text-overflow: ellipsis;
-
+      border: 1px solid #ced4da;
+      border-radius: var(--border-radius);
+      font-size: 16px;
+      transition: var(--transition);
+      font-family: 'Poppins', sans-serif;
     }
-
     
-
-    th {
-
-      background-color: #f8f9fa;
-
-      font-weight: 600;
-
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
     }
-
     
-
-    tr:hover {
-
-      background-color: #f5f5f5;
-
+    input[readonly] {
+      background-color: #e9ecef;
+      cursor: not-allowed;
     }
-
     
-
-    /* Search Results Table */
-
-    .search-results-table {
-
-      border-collapse: collapse;
-
-      width: 100%;
-
-      margin-top: 15px;
-
-    }
-
-    
-
-    .search-results-table th {
-
-      background-color: #2c3e50;
-
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
       color: white;
-
-      padding: 10px;
-
-      text-align: left;
-
-      position: sticky;
-
-      top: 0;
-
-    }
-
-    
-
-    .search-results-table td {
-
-      padding: 8px 10px;
-
-      border-bottom: 1px solid #ddd;
-
-    }
-
-    
-
-    .search-results-table tr:nth-child(even) {
-
-      background-color: #f2f2f2;
-
-    }
-
-    
-
-    .search-results-table tr:hover {
-
-      background-color: #e6e6e6;
-
-    }
-
-    
-
-    @media (max-width: 768px) {
-
-      table {
-
-        display: block;
-
-        overflow-x: auto;
-
-      }
-
-    }
-
-    
-
-    /* Utility Classes */
-
-    .text-center {
-
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
       text-align: center;
-
+      text-decoration: none;
+      transition: var(--transition);
+      font-family: 'Poppins', sans-serif;
     }
-
     
-
-    .mt-3 {
-
-      margin-top: 15px;
-
+    .btn:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
     }
-
     
-
-    .mb-3 {
-
-      margin-bottom: 15px;
-
+    .btn-secondary {
+      background-color: #6c757d;
     }
-
     
-
-    .d-none {
-
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+    
+    .btn-success {
+      background-color: #38b000;
+    }
+    
+    .btn-success:hover {
+      background-color: #2d8d00;
+    }
+    
+    .btn-danger {
+      background-color: var(--danger-color);
+    }
+    
+    .btn-danger:hover {
+      background-color: #d1145a;
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    
+    .hidden {
       display: none;
-
     }
-
     
-
-    /* Popup Styles */
-
-    .popup {
-
-      position: fixed;
-
-      top: 50%;
-
-      left: 50%;
-
-      transform: translate(-50%, -50%);
-
-      padding: 20px 30px;
-
-      background-color: #2ecc71;
-
+    #whatsappButtonContainer {
+      text-align: center;
+      margin-top: 30px;
+    }
+    
+    #whatsappLink {
+      background-color: #25D366;
       color: white;
-
-      border-radius: 5px;
-
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-
-      z-index: 1000;
-
-      animation: fadeInOut 4s forwards;
-
+      padding: 15px 30px;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition);
     }
-
     
-
-    @keyframes fadeInOut {
-
-      0% { opacity: 0; }
-
-      10% { opacity: 1; }
-
-      90% { opacity: 1; }
-
-      100% { opacity: 0; }
-
+    #whatsappLink:hover {
+      background-color: #128C7E;
+      transform: translateY(-2px);
     }
-
-  </style>
-
-</head>
-
-<body>
-
- 
-  <!-- Main Content -->
-
-  <main class="container">
-
-    <!-- Login Section -->
-
-    <section id="loginSection" class="card">
-
-      <h2 class="text-center">Branch Login</h2>
-
-      <form id="loginForm" onsubmit="handleLogin(event)">
-
-        <div class="form-group">
-
-          <label for="username">Username</label>
-
-          <input type="text" id="username" required>
-
-        </div>
-
-        
-
-        <div class="form-group">
-
-          <label for="password">Password</label>
-
-          <input type="password" id="password" required>
-
-        </div>
-
-        
-
-        <div class="text-center">
-
-          <button type="submit" class="btn btn-success">Login</button>
-
-        </div>
-
-      </form>
-
-    </section>
-
-    <!-- Branch Dashboard -->
-
-    <section id="branchSection" class="card d-none">
-
-      <h2>Welcome, <span id="branchName"></span></h2>
-
-      
-
-      <div class="nav-tabs">
-
-        <div class="nav-tab active" onclick="showSection('form')">New Booking</div>
-
-        <div class="nav-tab" onclick="showSection('search')">Search Records</div>
-
-      </div>
-
-    </section>
-
-    <!-- Booking Form Section -->
-
-    <section id="formSection" class="card d-none">
-
-      <h3>New Booking Form</h3>
-
-      
-
-      <form id="travelForm" onsubmit="handleSubmit(event)">
-
-        <div class="form-row">
-
-          <div class="form-group">
-
-            <label for="customerName">Customer Name</label>
-
-            <input type="text" id="customerName" name="customerName" required>
-
-          </div>
-
-          
-
-          <div class="form-group">
-
-            <label for="mobileNumber">Mobile Number</label>
-
-            <input type="text" id="mobileNumber" name="mobileNumber" required>
-
-          </div>
-
-        </div>
-
-        
-
-        <div class="form-row">
-
-          <div class="form-group">
-
-            <label for="pnr">PNR Number</label>
-
-            <input type="text" id="pnr" name="pnr" required>
-
-          </div>
-
-          
-
-          <div class="form-group">
-
-            <label for="tripType">Trip Type</label>
-
-            <select id="tripType" name="tripType" required>
-
-              <option value="One Way">One Way</option>
-
-              <option value="Return">Return</option>
-
-            </select>
-
-          </div>
-
-        </div>
-
-        
-
-        <div class="form-group">
-
-          <label for="travelDate">Travel Date</label>
-
-          <input type="date" id="travelDate" name="travelDate" required>
-
-        </div>
-
-        
-
-        <div class="form-row">
-
-          <div class="form-group">
-
-            <label for="costPrice">Cost Price (SAR)</label>
-
-            <input type="number" id="costPrice" name="costPrice" oninput="calculateProfit()" required>
-
-          </div>
-
-          
-
-          <div class="form-group">
-
-            <label for="cashTaken">Cash Taken (SAR)</label>
-
-            <input type="number" id="cashTaken" name="cashTaken" oninput="calculateProfit(); calculateBalance()" required>
-
-          </div>
-
-        </div>
-
-        
-
-        <div class="form-row">
-
-          <div class="form-group">
-
-            <label for="profit">Profit (SAR)</label>
-
-            <input type="number" id="profit" name="profit" readonly>
-
-          </div>
-
-          
-
-          <div class="form-group">
-
-            <label for="receivedCash">Received Cash (SAR)</label>
-
-            <input type="number" id="receivedCash" name="receivedCash" oninput="calculateBalance()" required>
-
-          </div>
-
-        </div>
-
-        
-
-        <div class="form-group">
-
-          <label for="balance">Balance (SAR)</label>
-
-          <input type="number" id="balance" name="balance" readonly>
-
-        </div>
-
-        
-
-        <div class="text-center">
-
-          <button type="submit" class="btn btn-success">Submit Booking</button>
-
-        </div>
-
-      </form>
-
-      
-
-      <div id="whatsappButtonContainer" class="text-center mt-3 d-none">
-
-        <a id="whatsappLink" class="btn btn-whatsapp" target="_blank">
-
-          <i class="fab fa-whatsapp"></i> Send WhatsApp Message
-
-        </a>
-
-      </div>
-
-    </section>
-
-    <!-- Search Section -->
-
-    <section id="searchSection" class="card d-none">
-
-      <h3>Search Records</h3>
-
-      
-
-      <form id="searchForm" onsubmit="event.preventDefault(); searchRecord();">
-
-        <div class="form-row">
-
-          <div class="form-group">
-
-            <label for="searchQuery">Search by Mobile or PNR</label>
-
-            <input type="text" id="searchQuery" required>
-
-          </div>
-
-        </div>
-
-        
-
-        <div class="text-center">
-
-          <button type="submit" class="btn">Search</button>
-
-        </div>
-
-      </form>
-
-      
-
-      <div id="searchResult" class="mt-3"></div>
-
-    </section>
-
-  </main>
-
-  <!-- Popup Notification -->
-
-  <div id="popupMessage" class="popup d-none"></div>
-
-  <script>
-
-    const scriptURL = "https://script.google.com/macros/s/AKfycbx1OULfRXdLoAux8EEVXQF9xXhM83dnG6sSwkxjbsYqXoqhZmBN_NFoV4F5hu87zzPP/exec";
-
-    const branchData = {
-
-      "Muhammad Shahzad": { password: "1234", branchName: "Muhammad Shahzad" },
-
-      "Muhammad Madni": { password: "5678", branchName: "Muhammad Madni" },
-
-      "Rana Usman": { password: "91011", branchName: "Rana Usman" },
-
-      "Muhammad Tahir": { password: "1213", branchName: "Muhammad Tahir" }
-
-    };
-
-    let currentBranch = "";
-
-    function handleLogin(event) {
-
-      event.preventDefault();
-
-      const username = document.getElementById("username").value;
-
-      const password = document.getElementById("password").value;
-
-      if (branchData[username] && branchData[username].password === password) {
-
-        currentBranch = branchData[username].branchName;
-
-        document.getElementById("branchName").innerText = currentBranch;
-
-        document.getElementById("loginSection").classList.add("d-none");
-
-        document.getElementById("branchSection").classList.remove("d-none");
-
-        document.getElementById("formSection").classList.remove("d-none");
-
-        
-
-        // Set active tab
-
-        document.querySelectorAll(".nav-tab").forEach(tab => tab.classList.remove("active"));
-
-        document.querySelector(".nav-tab").classList.add("active");
-
-      } else {
-
-        alert("Incorrect username or password");
-
+    
+    #whatsappLink i {
+      font-size: 20px;
+    }
+    
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      border-radius: var(--border-radius);
+    }
+    
+    .data-table th, 
+    .data-table td {
+      border: 1px solid #dee2e6;
+      padding: 12px 15px;
+      text-align: left;
+      white-space: nowrap;
+    }
+    
+    .data-table th {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: 500;
+    }
+    
+    .data-table tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    
+    .data-table tr:hover {
+      background-color: #e9ecef;
+    }
+    
+    .table-container {
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      background-color: var(--success-color);
+      color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: var(--transition);
+    }
+    
+    .notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .notification.error {
+      background-color: var(--danger-color);
+    }
+    
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .logo img {
+      max-width: 150px;
+      height: auto;
+    }
+    
+    .input-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    /* Slideshow Styles */
+    .dashboard-slideshow {
+      margin-top: 30px;
+    }
+    
+    .slideshow-container {
+      position: relative;
+      max-width: 100%;
+      margin: 20px 0 0;
+      overflow: hidden;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+    
+    .slide {
+      display: none;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .slide.active {
+      display: block;
+    }
+    
+    .slide img {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: var(--border-radius);
+    }
+    
+    .slide-caption {
+      padding: 15px;
+      background-color: rgba(0,0,0,0.7);
+      color: white;
+      position: absolute;
+      bottom: 40px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .slideshow-controls {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      background-color: rgba(0,0,0,0.5);
+    }
+    
+    .slideshow-controls button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .slideshow-controls button:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .slideshow-dots {
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    .dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin: 0 5px;
+      background-color: #bbb;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .dot.active {
+      background-color: var(--primary-color);
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    @media (max-width: 768px) {
+      .btn-group {
+        flex-direction: column;
       }
-
-    }
-
-    function calculateProfit() {
-
-      const costPrice = parseFloat(document.getElementById("costPrice").value) || 0;
-
-      const cashTaken = parseFloat(document.getElementById("cashTaken").value) || 0;
-
-      document.getElementById("profit").value = cashTaken - costPrice;
-
-    }
-
-    function calculateBalance() {
-
-      const receivedCash = parseFloat(document.getElementById("receivedCash").value) || 0;
-
-      const cashTaken = parseFloat(document.getElementById("cashTaken").value) || 0;
-
-      document.getElementById("balance").value = receivedCash - cashTaken;
-
-    }
-
-    function handleSubmit(event) {
-
-      event.preventDefault();
-
-      const form = document.getElementById("travelForm");
-
-      const formData = new FormData(form);
-
-      formData.set("branch", currentBranch);
-
-      const mobileNumberRaw = formData.get("mobileNumber").replace(/\D/g, '');
-
-      const customerName = formData.get("customerName");
-
-      const message = `
-
-Customer Name: ${customerName}
-
-Mobile Number: ${mobileNumberRaw}
-
-PNR: ${formData.get("pnr")}
-
-Trip Type: ${formData.get("tripType")}
-
-Travel Date: ${formData.get("travelDate")}
-
-Cost Price: ${formData.get("costPrice")}
-
-Cash Taken: ${formData.get("cashTaken")}
-
-Received Cash: ${formData.get("receivedCash")}
-
-Balance: ${formData.get("balance")}
-
-Branch: ${currentBranch}
-
-`.trim();
-
-      const countryCode = mobileNumberRaw.startsWith("05") ? "966" : "92";
-
-      const fullMobile = `${countryCode}${mobileNumberRaw}`;
-
-      const whatsappLink = `https://wa.me/${fullMobile}?text=${encodeURIComponent(message)}`;
-
-      document.getElementById("whatsappLink").href = whatsappLink;
-
-      document.getElementById("whatsappButtonContainer").classList.remove("d-none");
-
-      fetch(scriptURL, {
-
-        method: "POST",
-
-        body: formData
-
-      })
-
-        .then(res => res.text())
-
-        .then(data => {
-
-          showPopup("Form submitted successfully");
-
-          form.reset();
-
-        })
-
-        .catch(err => {
-
-          alert("Error submitting form");
-
-          console.error(err);
-
-        });
-
-    }
-
-    function showPopup(message) {
-
-      const popup = document.getElementById("popupMessage");
-
-      popup.innerText = message;
-
-      popup.classList.remove("d-none");
-
-      setTimeout(() => {
-
-        popup.classList.add("d-none");
-
-      }, 4000);
-
-    }
-
-    function showSection(section) {
-
-      document.getElementById("formSection").classList.toggle("d-none", section !== "form");
-
-      document.getElementById("searchSection").classList.toggle("d-none", section !== "search");
-
       
-
-      // Update active tab
-
-      document.querySelectorAll(".nav-tab").forEach(tab => tab.classList.remove("active"));
-
-      document.querySelectorAll(".nav-tab")[section === "form" ? 0 : 1].classList.add("active");
-
+      .btn {
+        width: 100%;
+      }
+      
+      .input-group {
+        grid-template-columns: 1fr;
+      }
+      
+      .data-table th,
+      .data-table td {
+        white-space: normal;
+        padding: 8px 10px;
+      }
+      
+      .slide img {
+        max-height: 300px;
+      }
+      
+      .slideshow-controls {
+        padding: 5px;
+      }
+      
+      .slideshow-controls button {
+        padding: 6px 12px;
+        font-size: 14px;
+      }
     }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Login Section -->
+    <div id="loginSection" class="card">
+      <div class="logo">
+        <i class="fas fa-plane-departure" style="font-size: 48px; color: var(--primary-color);"></i>
+        <h1>Travel Agency Portal</h1>
+      </div>
+      <h2>Branch Login</h2>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="username"><i class="fas fa-user"></i> Username</label>
+          <input type="text" id="username" placeholder="Enter your username" required>
+        </div>
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+      </form>
+    </div>
+    
+    <!-- Branch Section -->
+    <div id="branchSection" class="card hidden">
+      <div class="logo">
+        <i class="fas fa-plane-departure" style="font-size: 48px; color: var(--primary-color);"></i>
+        <h1>Welcome, <span id="branchName"></span></h1>
+      </div>
+      <div class="btn-group">
+        <button onclick="showSection('form')" class="btn">
+          <i class="fas fa-plus-circle"></i> New Booking
+        </button>
+        <button onclick="showSection('search')" class="btn btn-secondary">
+          <i class="fas fa-search"></i> Search Records
+        </button>
+      </div>
+      
+      <!-- Slideshow on Dashboard -->
+      <div class="dashboard-slideshow">
+        <h3><i class="fas fa-images"></i> Featured Packages</h3>
+        <div class="slideshow-container">
+          <!-- Slides will be added here by JavaScript -->
+          <div class="slideshow-controls">
+            <button onclick="prevSlide()"><i class="fas fa-chevron-left"></i> Previous</button>
+            <button onclick="nextSlide()">Next <i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+        <div class="slideshow-dots">
+          <!-- Dots will be added here by JavaScript -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Form Section -->
+    <div id="formSection" class="card hidden">
+      <h2><i class="fas fa-ticket-alt"></i> New Booking Form</h2>
+      <form id="travelForm" onsubmit="handleSubmit(event)">
+        <div class="input-group">
+          <div class="form-group">
+            <label>Customer Name</label>
+            <input type="text" name="customerName" placeholder="Full name" required>
+          </div>
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="text" name="mobileNumber" placeholder="e.g. 0512345678" required>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <div class="form-group">
+            <label>PNR Number</label>
+            <input type="text" name="pnr" placeholder="Booking reference" required>
+          </div>
+          <div class="form-group">
+            <label>Trip Type</label>
+            <select name="tripType" required>
+              <option value="">Select trip type</option>
+              <option value="One Way">One Way</option>
+              <option value="Return">Return</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Travel Date</label>
+          <input type="date" name="travelDate" required>
+        </div>
+        
+        <h3>Financial Details</h3>
+        <div class="input-group">
+          <div class="form-group">
+            <label>Cost Price (SAR)</label>
+            <input type="number" id="costPrice" name="costPrice" placeholder="0.00" oninput="calculateProfit()" required>
+          </div>
+          <div class="form-group">
+            <label>Cash Taken (SAR)</label>
+            <input type="number" id="cashTaken" name="cashTaken" placeholder="0.00" oninput="calculateProfit(); calculateBalance()" required>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <div class="form-group">
+            <label>Profit (SAR)</label>
+            <input type="number" id="profit" name="profit" readonly>
+          </div>
+          <div class="form-group">
+            <label>Received Cash (SAR)</label>
+            <input type="number" id="receivedCash" name="receivedCash" placeholder="0.00" oninput="calculateBalance()" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Balance (SAR)</label>
+            <input type="number" id="balance" name="balance" readonly>
+        </div>
+        
+        <div class="form-group hidden">
+          <label>Branch</label>
+          <input type="text" name="branch" readonly>
+        </div>
+        
+        <button type="submit" class="btn btn-success" id="submitBtn">
+          <i class="fas fa-paper-plane"></i> Submit Booking
+        </button>
+      </form>
+      
+      <div id="whatsappButtonContainer" class="hidden">
+        <a id="whatsappLink" target="_blank">
+          <i class="fab fa-whatsapp"></i> Send Booking Details via WhatsApp
+        </a>
+      </div>
+    </div>
+    
+    <!-- Search Section -->
+    <div id="searchSection" class="card hidden">
+      <h2><i class="fas fa-search"></i> Search Records</h2>
+      <form onsubmit="event.preventDefault(); searchRecord();">
+        <div class="form-group">
+          <label>Search by Mobile Number or PNR</label>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="searchQuery" placeholder="Enter mobile number or PNR" required>
+            <button type="submit" class="btn">
+              <i class="fas fa-search"></i> Search
+            </button>
+          </div>
+        </div>
+      </form>
+      <div id="searchResult"></div>
+    </div>
+  </div>
+  
+  <!-- Notification -->
+  <div id="notification" class="notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="notificationMessage">Success!</span>
+  </div>
+  
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbx1OULfRXdLoAux8EEVXQF9xXhM83dnG6sSwkxjbsYqXoqhZmBN_NFoV4F5hu87zzPP/exec";
+    
+    const branchData = {
+      "Muhammad Shahzad": { password: "1234", branchName: "Muhammad Shahzad" },
+      "Muhammad Madni": { password: "5678", branchName: "Muhammad Madni" },
+      "Rana Usman": { password: "91011", branchName: "Rana Usman" },
+      "Muhammad Tahir": { password: "1213", branchName: "Muhammad Tahir" }
+    };
+    
+    // Slideshow data
+    const slideshowData = [
+      {
+        imageUrl: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        caption: "Dubai Luxury Package - Starting from SAR 2500"
+      },
+      {
+        imageUrl: "https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        caption: "Istanbul Special - Starting from SAR 3500"
+      },
+      {
+        imageUrl: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        caption: "Maldives Honeymoon Package - Starting from SAR 5000"
+      },
+      {
+        imageUrl: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        caption: "London Tour - Starting from SAR 4000"
+      }
+    ];
+    
+    let currentBranch = "";
+    let isLoading = false;
+    let currentSlide = 0;
+    let slideInterval;
+    
+    function handleLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      
+      if (branchData[username] && branchData[username].password === password) {
+        currentBranch = branchData[username].branchName;
+        document.getElementById("branchName").innerText = currentBranch;
+        document.querySelector('input[name="branch"]').value = currentBranch;
+        
+        document.getElementById("loginSection").classList.add("hidden");
+        document.getElementById("branchSection").classList.remove("hidden");
+        document.getElementById("formSection").classList.remove("hidden");
+        
+        // Initialize slideshow
+        initSlideshow();
+        
+        showNotification("Login successful! Welcome " + currentBranch);
+      } else {
+        showNotification("Incorrect username or password", true);
+      }
+    }
+    
+    function calculateProfit() {
+      const costPrice = parseFloat(document.getElementById("costPrice").value) || 0;
+      const cashTaken = parseFloat(document.getElementById("cashTaken").value) || 0;
+      document.getElementById("profit").value = (cashTaken - costPrice).toFixed(2);
+    }
+    
+    function calculateBalance() {
+      const receivedCash = parseFloat(document.getElementById("receivedCash").value) || 0;
+      const cashTaken = parseFloat(document.getElementById("cashTaken").value) || 0;
+      document.getElementById("balance").value = (receivedCash - cashTaken).toFixed(2);
+    }
+    
+    function handleSubmit(event) {
+      event.preventDefault();
+      if (isLoading) return;
+      
+      const form = document.getElementById("travelForm");
+      const formData = new FormData(form);
+      const submitBtn = document.getElementById("submitBtn");
+      
+      formData.set("branch", currentBranch);
+      
+      const mobileNumberRaw = formData.get("mobileNumber").replace(/\D/g, '');
+      const customerName = formData.get("customerName");
+      const message = `✨ *New Booking Confirmation* ✨
 
-    function searchRecord() {
+❤️ *Customer Name:* ${customerName}
+📱 *Mobile Number:* ${mobileNumberRaw}
+🎫 *PNR:* ${formData.get("pnr")}
+✈️ *Trip Type:* ${formData.get("tripType")}
+📅 *Travel Date:* ${formData.get("travelDate")}
 
-      const query = document.getElementById("searchQuery").value.trim();
+💰 *Financial Details:*
+- Cost Price: SAR ${formData.get("costPrice")}
+- Cash Taken: SAR ${formData.get("cashTaken")}
+- Profit: SAR ${formData.get("profit")}
+- Received Cash: SAR ${formData.get("receivedCash")}
+- Balance: SAR ${formData.get("balance")}
 
-      if (!query) return;
+🏢 *Branch:* ${currentBranch}
 
-      fetch(`${scriptURL}?search=${encodeURIComponent(query)}&branch=${encodeURIComponent(currentBranch)}`)
+Thank you for choosing us! Safe travels! ✈️`;
+      
+      const countryCode = mobileNumberRaw.startsWith("05") ? "966" : "92";
+      const fullMobile = `${countryCode}${mobileNumberRaw.substring(mobileNumberRaw.startsWith("0") ? 1 : 0)}`;
+      document.getElementById("whatsappLink").href = `https://wa.me/${fullMobile}?text=${encodeURIComponent(message)}`;
+      document.getElementById("whatsappButtonContainer").classList.remove("hidden");
 
-        .then(res => res.json())
-
+      // Show loading state
+      isLoading = true;
+      submitBtn.innerHTML = '<span class="spinner"></span> Processing...';
+      submitBtn.disabled = true;
+      
+      fetch(scriptURL, {
+        method: "POST",
+        body: formData
+      })
+        .then(res => res.text())
         .then(data => {
-
-          const resultDiv = document.getElementById("searchResult");
-
-          if (data.length === 0) {
-
-            resultDiv.innerHTML = "<p>No record found.</p>";
-
-            return;
-
-          }
-
-          // Create a more robust table structure
-
-          let html = `
-
-            <div style="overflow-x:auto;">
-
-              <h4>Search Result:</h4>
-
-              <table class="search-results-table">
-
-                <thead>
-
-                  <tr>
-
-          `;
-
-          
-
-          // Add headers
-
-          Object.keys(data[0]).forEach(key => {
-
-            html += `<th>${key.replace(/([A-Z])/g, ' $1').trim()}</th>`;
-
-          });
-
-          
-
-          html += `
-
-                </tr>
-
-              </thead>
-
-              <tbody>
-
-          `;
-
-          
-
-          // Add rows
-
-          data.forEach(row => {
-
-            html += "<tr>";
-
-            Object.values(row).forEach(val => {
-
-              html += `<td>${val || ''}</td>`;
-
-            });
-
-            html += "</tr>";
-
-          });
-
-          html += `
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-          `;
-
-          
-
-          resultDiv.innerHTML = html;
-
+          showNotification("Booking submitted successfully!");
+          form.reset();
+          window.scrollTo(0, document.body.scrollHeight);
         })
-
         .catch(err => {
-
-          console.error("Search error:", err);
-
-          document.getElementById("searchResult").innerHTML = `
-
-            <p>Error loading results. Please try again.</p>
-
-            ${err.message ? `<small>${err.message}</small>` : ''}
-
-          `;
-
+          showNotification("Error submitting booking", true);
+          console.error(err);
+        })
+        .finally(() => {
+          isLoading = false;
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Booking';
+          submitBtn.disabled = false;
         });
-
     }
-
+    
+    function showNotification(message, isError = false) {
+      const notification = document.getElementById("notification");
+      const notificationMessage = document.getElementById("notificationMessage");
+      
+      notificationMessage.textContent = message;
+      notification.className = isError ? "notification error show" : "notification show";
+      
+      if (isError) {
+        notification.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + notification.innerHTML;
+      }
+      
+      setTimeout(() => {
+        notification.classList.remove("show");
+      }, 5000);
+    }
+    
+    function showSection(section) {
+      document.getElementById("formSection").classList.toggle("hidden", section !== "form");
+      document.getElementById("searchSection").classList.toggle("hidden", section !== "search");
+      
+      if (section === "search") {
+        document.getElementById("searchQuery").focus();
+        clearInterval(slideInterval);
+      } else if (section === "form") {
+        clearInterval(slideInterval);
+      } else {
+        // When returning to dashboard (no specific section)
+        startSlideInterval();
+      }
+    }
+    
+    function searchRecord() {
+      const query = document.getElementById("searchQuery").value.trim();
+      if (!query) return;
+      
+      const searchResult = document.getElementById("searchResult");
+      searchResult.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Searching...</p>';
+      
+      fetch(`${scriptURL}?search=${encodeURIComponent(query)}&branch=${encodeURIComponent(currentBranch)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.length === 0) {
+            searchResult.innerHTML = "<p>No records found matching your search.</p>";
+            return;
+          }
+          
+          // Get all unique keys from the first record
+          const headers = Object.keys(data[0]);
+          
+          // Create table HTML
+          let html = `
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    ${headers.map(header => 
+                      `<th>${header.replace(/([A-Z])/g, ' $1').replace(/\s+/g, ' ').trim()}</th>`
+                    ).join('')}
+                  </tr>
+                </thead>
+                <tbody>
+                  ${data.map(record => `
+                    <tr>
+                      ${headers.map(header => 
+                        `<td>${record[header] || '-'}</td>`
+                      ).join('')}
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          `;
+          
+          searchResult.innerHTML = html;
+        })
+        .catch(err => {
+          showNotification("Search failed", true);
+          console.error(err);
+          searchResult.innerHTML = "<p>Error loading search results. Please try again.</p>";
+        });
+    }
+    
+    // Slideshow functions
+    function initSlideshow() {
+      const slideshowContainer = document.querySelector('.slideshow-container');
+      const dotsContainer = document.querySelector('.slideshow-dots');
+      
+      // Clear any existing slides (except controls which is now hardcoded in HTML)
+      const existingSlides = slideshowContainer.querySelectorAll('.slide');
+      existingSlides.forEach(slide => slide.remove());
+      
+      // Clear dots
+      dotsContainer.innerHTML = '';
+      
+      // Create slides and dots
+      slideshowData.forEach((slide, index) => {
+        // Create slide
+        const slideElement = document.createElement('div');
+        slideElement.className = `slide ${index === 0 ? 'active' : ''}`;
+        slideElement.innerHTML = `
+          <img src="${slide.imageUrl}" alt="Travel Package ${index + 1}">
+          <div class="slide-caption">${slide.caption}</div>
+        `;
+        // Insert before the controls
+        slideshowContainer.insertBefore(slideElement, slideshowContainer.querySelector('.slideshow-controls'));
+        
+        // Create dot
+        const dot = document.createElement('span');
+        dot.className = `dot ${index === 0 ? 'active' : ''}`;
+        dot.onclick = () => goToSlide(index);
+        dotsContainer.appendChild(dot);
+      });
+      
+      currentSlide = 0;
+      startSlideInterval();
+    }
+    
+    function startSlideInterval() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, 5000);
+    }
+    
+    function nextSlide() {
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.dot');
+      
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      
+      currentSlide = (currentSlide + 1) % slides.length;
+      
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+      
+      // Restart interval when manually navigating
+      startSlideInterval();
+    }
+    
+    function prevSlide() {
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.dot');
+      
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+      
+      // Restart interval when manually navigating
+      startSlideInterval();
+    }
+    
+    function goToSlide(index) {
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.dot');
+      
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      
+      currentSlide = index;
+      
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+      
+      // Restart interval when manually navigating
+      startSlideInterval();
+    }
+    
+    // Set default date to today
+    document.addEventListener("DOMContentLoaded", function() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementsByName("travelDate")[0].value = today;
+      document.getElementsByName("travelDate")[0].min = today;
+    });
   </script>
-
 </body>
-
 </html>
