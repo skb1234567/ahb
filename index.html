@@ -259,95 +259,140 @@
       animation: spin 1s ease-in-out infinite;
     }
     
-    /* Slideshow Styles */
+    /* Enhanced Slideshow UX Design */
     .dashboard-slideshow {
-      margin-top: 30px;
-    }
-    
-    .slideshow-container {
+      margin: 30px 0;
       position: relative;
-      max-width: 100%;
-      margin: 20px 0 0;
-      overflow: hidden;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
     }
-    
-    .slide {
-      display: none;
-      width: 100%;
-      text-align: center;
-    }
-    
-    .slide.active {
-      display: block;
-    }
-    
-    .slide img {
-      max-width: 100%;
-      max-height: 400px;
-      object-fit: contain;
-      border-radius: var(--border-radius);
-    }
-    
-    .slide-caption {
-      padding: 15px;
-      background-color: rgba(0,0,0,0.7);
-      color: white;
-      position: absolute;
-      bottom: 40px;
-      width: 100%;
-      text-align: center;
-    }
-    
-    .slideshow-controls {
-      position: absolute;
-      bottom: hide;
-      width: 100%;
+
+    .slideshow-header {
       display: flex;
       justify-content: space-between;
-      padding: 10px;
-      background-color: rgba(0,0,0,0.5);
+      align-items: center;
+      margin-bottom: 15px;
     }
-    
-    .slideshow-controls button {
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 8px 16px;
+
+    .slideshow-title {
+      color: var(--primary-color);
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .slideshow-nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .slideshow-container {
+      position: relative;
       border-radius: var(--border-radius);
-      cursor: pointer;
-      transition: var(--transition);
+      overflow: hidden;
+      box-shadw: var(--box-shadow);
+      height: 200px;
     }
-    
-    .slideshow-controls button:hover {
-      background-color: var(--secondary-color);
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: scale(0.98);
     }
-    
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 1;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .slide-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 20px;
+      color: white;
+      transform: translateY(20px);
+      transition: transform 0.5s ease;
+    }
+
+    .slide.active .slide-content {
+      transform: translateY(0);
+    }
+
+    .slide-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .slide-description {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
     .slideshow-dots {
-      text-align: center;
-      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 15px;
     }
-    
+
     .dot {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      margin: 0 5px;
-      background-color: #bbb;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
+      background-color: #ddd;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s ease;
     }
-    
+
     .dot.active {
       background-color: var(--primary-color);
+      transform: scale(1.2);
     }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+
+    .slideshow-nav-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255,255,255,0.9);
+      color: var(--primary-color);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-    
+
+    .slideshow-nav-btn:hover {
+      background-color: var(--primary-color);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .slideshow-nav-btn i {
+      font-size: 1rem;
+    }
+
+    /* Animation for slide change */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Responsive adjustments */
     @media (max-width: 768px) {
       .btn-group {
         flex-direction: column;
@@ -367,18 +412,26 @@
         padding: 8px 10px;
       }
       
-      .slide img {
-        max-height: 300px;
+      .slideshow-container {
+        height: 300px;
       }
       
-      .slideshow-controls {
-        padding: 5px;
+      .slide-title {
+        font-size: 1.2rem;
       }
       
-      .slideshow-controls button {
-        padding: 6px 12px;
-        font-size: 14px;
+      .slide-description {
+        font-size: 0.8rem;
       }
+      
+      .slideshow-nav-btn {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -422,16 +475,24 @@
         </button>
       </div>
       
-      <!-- Slideshow on Dashboard -->
+      <!-- Enhanced Slideshow on Dashboard -->
       <div class="dashboard-slideshow">
-        <h3><i class="fas fa-images"></i> Featured Packages</h3>
-        <div class="slideshow-container">
-          <!-- Slides will be added here by JavaScript -->
-          <div class="slideshow-controls">
-            <button onclick="prevSlide()"><i class="fas fa-chevron-left"></i> Previous</button>
-            <button onclick="nextSlide()">Next <i class="fas fa-chevron-right"></i></button>
+        <div class="slideshow-header">
+          <h3 class="slideshow-title"><i class="fas fa-images"></i> Featured Travel Packages</h3>
+          <div class="slideshow-nav-buttons">
+            <button class="slideshow-nav-btn" onclick="prevSlide()">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slideshow-nav-btn" onclick="nextSlide()">
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
         </div>
+        
+        <div class="slideshow-container">
+          <!-- Slides will be added here by JavaScript -->
+        </div>
+        
         <div class="slideshow-dots">
           <!-- Dots will be added here by JavaScript -->
         </div>
@@ -498,7 +559,7 @@
         
         <div class="form-group">
           <label>Balance (SAR)</label>
-            <input type="number" id="balance" name="balance" readonly>
+          <input type="number" id="balance" name="balance" readonly>
         </div>
         
         <div class="form-group hidden">
@@ -552,23 +613,31 @@
       "Muhammad Tahir": { password: "1213", branchName: "Muhammad Tahir" }
     };
     
-    // Slideshow data
+    // Enhanced slideshow data
     const slideshowData = [
       {
-        imageUrl: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi4isfXOuCQ0FUFybLsemxsDTQzCgqMZgDNyHG1KHginOrAG6QCVFUAY4qcfBJkT58l2vwDnLjACkybzdmNfBMDxUVUqa9A8nDj7-0bChtFzALQ3H-_fyO87wUcnfIn3YQKnF8lSBXICB6FsvbvoyJMqIBz8pM30Hu-cFAN1oF2IT8Qh_zOw8vwzH2jrXwq/s600/1000499339.png",
-        caption: "hide"
+        imageUrl: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        title: "Dubai Luxury Experience",
+        description: "5-day all-inclusive package with desert safari and Burj Khalifa visit",
+        price: "2,500"
       },
       {
-        imageUrl: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgXCBmAT0FgA0uiqUsPdqezuOHnuBhFIIHqJvG-sl46yvvjvmAZIz43V5TkedheLCOycxJZuTjHWnaKFp4BBEOHVDKRiAPdggnsjW7E4fls96sDeJHVRPzZj2t2h9TcTSfxkYzqsjBGvAsIF2RZ_euPZdUJT2vYFz7UvHqw_2EFxTnTvB8Rur85Q16E_G4o/s600/1000500335.png",
-       caption: "hide"
+        imageUrl: "https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        title: "Magical Istanbul",
+        description: "7-day cultural tour including Hagia Sophia and Bosphorus cruise",
+        price: "3,500"
       },
       {
-        imageUrl: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjafIvtVeS26C5ffCbX_uF7BDK4qd0R62sZHbrAeeLaE5oXCaNXu03SAxKP6bs6EO025f7K1nkIi899bAfZHAHBmD41QO9Sdkwk1QD14dUrbwkNQ1AOvrAMfe2P4X0UFYMLAsv1EEdi9dLxvXMLXwKAUa7NoZmFA0ceYRQpst4w-AVzWizF-xa4fgQMuhFo/s600/1000502710.jpg",
-        caption: "hide"
+        imageUrl: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        title: "Maldives Paradise",
+        description: "Romantic overwater bungalow getaway with snorkeling and spa",
+        price: "5,000"
       },
       {
-        imageUrl: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhcDNnWUF1fcY0Myl9RYXut5zkaxrCuROr8Z1_s0NeClhpJO7QHpVik17IZgrHVv6nN67ZGKhF61td3UvbbQHwrB_j9VyGbizFJam_79HAvh8payU-EzlLvOj9nmGZBW4lG1r6UcfYAY_DrUbztKBiH8q7nq39YQvfLpJNgbG1hI0SaPeXRca1CVz2jwazl/s600/1000502814.png",
-        caption: "Al Harbi Travels - Jeddah Saudia arabia"
+        imageUrl: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        title: "London Explorer",
+        description: "6-day city tour with visits to Buckingham Palace and West End show",
+        price: "4,000"
       }
     ];
     
@@ -591,7 +660,7 @@
         document.getElementById("branchSection").classList.remove("hidden");
         document.getElementById("formSection").classList.remove("hidden");
         
-        // Initialize slideshow
+        // Initialize enhanced slideshow
         initSlideshow();
         
         showNotification("Login successful! Welcome " + currentBranch);
@@ -700,7 +769,7 @@ Thank you for choosing us! Safe travels! ✈️`;
       } else if (section === "form") {
         clearInterval(slideInterval);
       } else {
-        // When returning to dashboard (no specific section)
+        // When returning to dashboard
         startSlideInterval();
       }
     }
@@ -756,32 +825,31 @@ Thank you for choosing us! Safe travels! ✈️`;
         });
     }
     
-    // Slideshow functions
+    // Enhanced slideshow functions
     function initSlideshow() {
       const slideshowContainer = document.querySelector('.slideshow-container');
       const dotsContainer = document.querySelector('.slideshow-dots');
       
-      // Clear any existing slides (except controls which is now hardcoded in HTML)
-      const existingSlides = slideshowContainer.querySelectorAll('.slide');
-      existingSlides.forEach(slide => slide.remove());
-      
-      // Clear dots
+      // Clear existing content
+      slideshowContainer.innerHTML = '';
       dotsContainer.innerHTML = '';
       
-      // Create slides and dots
+      // Create slides
       slideshowData.forEach((slide, index) => {
-        // Create slide
         const slideElement = document.createElement('div');
         slideElement.className = `slide ${index === 0 ? 'active' : ''}`;
         slideElement.innerHTML = `
-          <img src="${slide.imageUrl}" alt="Travel Package ${index + 1}">
-          <div class="slide-caption">${slide.caption}</div>
+          <img src="${slide.imageUrl}" alt="${slide.title}">
+          <div class="slide-content">
+            <div class="slide-title">${slide.title}</div>
+            <div class="slide-description">${slide.description}</div>
+            <div class="slide-price" style="margin-top: 10px; font-weight: 600;">SAR ${slide.price}</div>
+          </div>
         `;
-        // Insert before the controls
-        slideshowContainer.insertBefore(slideElement, slideshowContainer.querySelector('.slideshow-controls'));
+        slideshowContainer.appendChild(slideElement);
         
-        // Create dot
-        const dot = document.createElement('span');
+        // Create dots
+        const dot = document.createElement('div');
         dot.className = `dot ${index === 0 ? 'active' : ''}`;
         dot.onclick = () => goToSlide(index);
         dotsContainer.appendChild(dot);
